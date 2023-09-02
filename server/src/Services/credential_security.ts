@@ -13,7 +13,10 @@ export const encrypt = (password:string)=>{
     // Combine IV and encrypted password into a single Buffer
     const encryptedData = Buffer.concat([iv, encryptedPassword]);
 
-    return encryptedData.toString('hex'); // Convert the result to a hex string
+    return {
+        iv: iv.toString('hex'),
+       password: encryptedData.toString('hex')
+    }; // Convert the result to a hex string
     
 }
 

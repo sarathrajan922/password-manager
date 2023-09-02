@@ -5,12 +5,14 @@ import { PasswordInterface } from "../types/passwordInterface";
 const userHelper = {
     addPassword: async(passwordData:PasswordInterface)=>{
         console.log(passwordData)
-        const hashedpassword = encrypt(passwordData.password)
-        console.log(hashedpassword)
-        const result = await PasswordModel.create(passwordData)
-        return {
-            "hashedpassword": hashedpassword
-        }
+        const {iv,password}= encrypt(passwordData.password)
+          const obj ={
+            iv,
+            password,
+            title: passwordData.title
+          }
+       await PasswordModel.create(obj)
+        return true
     }
 }
 
