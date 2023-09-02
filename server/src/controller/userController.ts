@@ -10,8 +10,7 @@ const userController = {
     addPassword:(req:Request,res:Response)=>{
         const result = userHelper.addPassword(req.body)
         res.send({
-            message: 'password added succesfully',
-            result
+            message: 'password added succesfully'
         })
     }
 }
