@@ -1,11 +1,6 @@
 import PasswordModel from "../config/Database/model/passwordModel";
+import { PasswordInterface } from "../types/passwordInterface";
 
-interface PasswordInterface {
-    password: string;
-    iv: string;
-    title: string;
-
-}
 const userHelper = {
     addPassword: async(passwordData:PasswordInterface)=>{
         console.log(passwordData)
