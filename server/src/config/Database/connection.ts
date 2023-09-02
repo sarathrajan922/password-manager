@@ -1,15 +1,13 @@
 import mongoose from "mongoose";
+import configKeys from "../configKeys";
 
-const dbName = 'passManager'
-const MONGO_DB_URL = 'mongodb+srv://sarathrajan:cnbvRjsjfyQA90Se@timeshub.l0vdmu5.mongodb.net/test?authSource=timesHub&authMechanism=SCRAM-SHA-1'
 
 const connectDB = async () => {
     const dbObject = {
-      dbName: dbName,
+      dbName: configKeys.DB_NAME,
     };
-  
     try {
-      await mongoose.connect(MONGO_DB_URL,dbObject);
+      await mongoose.connect(configKeys.MONGO_DB_URL,dbObject);
       console.log(`Database connected successfully`);
     } catch (error) {
       console.log(error);
