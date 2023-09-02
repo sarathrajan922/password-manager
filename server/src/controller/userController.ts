@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-
+import userHelper from "../helper/userHelper"
 const userController = {
 
 
@@ -7,9 +7,12 @@ const userController = {
         res.send('api reached in controller')
     },
 
-    addPassword: (req:Request,res:Response)=>{
-        console.log(req.body)
-        res.send('success')
+    addPassword:(req:Request,res:Response)=>{
+        const result = userHelper.addPassword(req.body)
+        res.send({
+            message: 'password added succesfully',
+            result
+        })
     }
 }
 
