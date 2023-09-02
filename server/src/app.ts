@@ -3,8 +3,9 @@ import connectDB from "./config/Database/connection";
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import configKeys from "./config/configKeys";
 const app = express();
-const port = 3001;
+const port = configKeys.PORT;
 
 import userRouter from "./routes/user";
 
