@@ -1,5 +1,6 @@
 import { Request,Response } from "express"
 import userHelper from "../helper/userHelper"
+import { decrypt } from "../Services/credential_security"
 const userController = {
 
 
@@ -11,6 +12,17 @@ const userController = {
         const result = userHelper.addPassword(req.body)
         res.send({
             message: 'password added succesfully'
+        })
+    },
+
+    showPassword: (req:Request,res:Response)=>{
+        const encryptedPassHex = req.body.password ?? ''
+        const ivHex = req.body.iv ?? ''
+        const result = decrypt(encryptedPassHex,ivHex)
+        console.log(result)
+        res.send({
+            message: "password decryted succesfuly",
+            password: result
         })
     }
 }
