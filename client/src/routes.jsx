@@ -1,6 +1,7 @@
 import { createBrowserRouter}  from 'react-router-dom' ;
 import UserDash from './components/user/dash';
 import App from './App';
+
 const AppRouter = createBrowserRouter([
     {
         path: "/",
@@ -9,7 +10,8 @@ const AppRouter = createBrowserRouter([
             {
                 path: '/',
                 element: <UserDash/>
-            }
+            },
+            
         ]
     }
 ])
