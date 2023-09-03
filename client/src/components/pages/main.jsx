@@ -7,17 +7,47 @@ import {
   Typography,
   CardBody,
 } from "@material-tailwind/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Search from "./search";
-const MainSection = () => {
-  const [open, setOpen] = React.useState(false);
+import { DefaultPagination } from "./pagination";
 
-  const toggleOpen = () => setOpen((cur) => !cur);
+const dummyData = [
+  {
+    title: "LeetCode",
+    password: "password1234",
+  },
+  {
+    title: "GitHub",
+    password: "qwerty5678",
+  },
+  {
+    title: "Facebook",
+    password: "securePassword",
+  },
+  {
+    title: "Instagram",
+    password: "myp@ssw0rd",
+  },
+  // {
+  //   title: "email",
+  //   password: "secretpassword123",
+  // },
+];
+const MainSection = () => {
+  const [passwordData, setPasswordData] = useState([]);
+  useEffect(() => {
+    setPasswordData(dummyData);
+  }, []);
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleOpen = (index) => {
+    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
 
   return (
     <>
       <div className="flex flex-row w-full  max-h-screen">
-        <div className="w-full flex">
+        <div className="w-full flex ">
           <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -60,212 +90,53 @@ const MainSection = () => {
             <div className="py-3 my-3">
               <Search />
             </div>
-            <li className="py-3 sm:pb-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                    GitHub
-                  </p>
-                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    <Button size="sm" onClick={toggleOpen}>
-                      view
-                    </Button>
-                    <Collapse open={open}>
-                      <Card className="my-4 mx-auto w-8/12">
-                        <CardBody>
-                          <Typography>
-                            Your LinkedIn password is password123
-                          </Typography>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
-                  </p>
+
+            {passwordData.map((item, index) => (
+              <li className="py-3 sm:pb-4" key={index}>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                      {item?.title}
+                    </p>
+                    <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                      <Button size="sm" onClick={() => toggleOpen(index)}>
+                        view
+                      </Button>
+                      <Collapse open={openIndex === index}>
+                        <Card className="my-4 mx-auto w-8/12">
+                          <CardBody>
+                            <Typography>
+                              Your {item?.title} password is {item?.password}
+                            </Typography>
+                          </CardBody>
+                        </Card>
+                      </Collapse>
+                    </p>
+                  </div>
+                  <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                    <IconButton color="red">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                        />
+                      </svg>
+                    </IconButton>
+                  </div>
                 </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  <IconButton color="red">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
-                  </IconButton>
-                </div>
-              </div>
-            </li>
-            <li className="py-3 sm:py-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                    LinkedIn
-                  </p>
-                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    <Button size="sm" onClick={toggleOpen}>
-                      view
-                    </Button>
-                    <Collapse open={open}>
-                      <Card className="my-4 mx-auto w-8/12">
-                        <CardBody>
-                          <Typography>
-                            Your LinkedIn password is password123
-                          </Typography>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
-                  </p>
-                </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  <IconButton color="red">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
-                  </IconButton>
-                </div>
-              </div>
-            </li>
-            <li className="py-3 sm:py-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                    FaceBook
-                  </p>
-                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    <Button size="sm" onClick={toggleOpen}>
-                      view
-                    </Button>
-                    <Collapse open={open}>
-                      <Card className="my-4 mx-auto w-8/12">
-                        <CardBody>
-                          <Typography>
-                            Your LinkedIn password is password123
-                          </Typography>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
-                  </p>
-                </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  <IconButton color="red">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
-                  </IconButton>
-                </div>
-              </div>
-            </li>
-            <li className="py-3 sm:py-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                    Instagram
-                  </p>
-                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    <Button size="sm" onClick={toggleOpen}>
-                      view
-                    </Button>
-                    <Collapse open={open}>
-                      <Card className="my-4 mx-auto w-8/12">
-                        <CardBody>
-                          <Typography>
-                            Your LinkedIn password is password123
-                          </Typography>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
-                  </p>
-                </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  <IconButton color="red">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
-                  </IconButton>
-                </div>
-              </div>
-            </li>
-            <li className="pt-3 pb-0 sm:pt-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                    LeetCode
-                  </p>
-                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    <Button size="sm" onClick={toggleOpen}>
-                      view
-                    </Button>
-                    <Collapse open={open}>
-                      <Card className="my-4 mx-auto w-8/12">
-                        <CardBody>
-                          <Typography>
-                            Your LinkedIn password is password123
-                          </Typography>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
-                  </p>
-                </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                  <IconButton color="red">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
-                  </IconButton>
-                </div>
-              </div>
-            </li>
+              </li>
+            ))}
+
           </ul>
+          <DefaultPagination/>
         </div>
       </div>
     </>
