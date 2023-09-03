@@ -1,6 +1,10 @@
 import { createBrowserRouter}  from 'react-router-dom' ;
-import UserDash from './components/user/dash';
+
 import App from './App';
+import Body from './components/pages/body';
+
+
+
 
 const AppRouter = createBrowserRouter([
     {
@@ -9,8 +13,8 @@ const AppRouter = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <UserDash/>
-            },
+                element: <Body/>
+            }
             
         ]
     }
