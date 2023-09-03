@@ -10,13 +10,6 @@ const userHelper = {
       password,
       title : passwordData.title 
     }
-    // const decryptedPass = decrypt(passwordData)
-    // const obj = {
-    //   iv: 'kjflk',
-    //   password:'ljljflkj',
-    //   title: passwordData.title,
-    // };
-    // console.log(decryptedPass)
     await PasswordModel.create(encryptedObj);
     return true;
   },
