@@ -1,6 +1,6 @@
 export interface PasswordInterface {
     password: string;
-    iv: string;
+    iv: string | null;
     title: string;
 
 }

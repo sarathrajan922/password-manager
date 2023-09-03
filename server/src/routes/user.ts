@@ -4,6 +4,7 @@ import userController from "../controller/userController";
 
 
 userRouter.get('/',userController.demo)
-userRouter.post('/add-password',userController.addPassword)
+userRouter.post('/add-password',userController.addPassword);
+userRouter.post('/show-password',userController.showPassword)
 
 export default userRouter;
