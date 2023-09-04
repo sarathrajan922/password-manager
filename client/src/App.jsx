@@ -1,20 +1,14 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
-const  App =()=>{
+const App = () => {
   return (
     <>
-    
-     <Outlet/>
-
+      <Outlet />
     </>
   );
-}
-
-
-
-
+};
 
 export default App;
