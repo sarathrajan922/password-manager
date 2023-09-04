@@ -13,6 +13,11 @@ const userHelper = {
     await PasswordModel.create(encryptedObj);
     return true;
   },
+
+  getAllPasswords: async ()=>{
+    const data = await PasswordModel.find();
+    return data
+  }
 };
 
 export default userHelper;

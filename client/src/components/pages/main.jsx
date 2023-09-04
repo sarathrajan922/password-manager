@@ -13,6 +13,7 @@ import { DefaultPagination } from "./pagination";
 import { AddPassword } from "../../features/Axios/user/addPassword";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { getAllPasswords } from "../../features/Axios/user/AllPasswords";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -45,6 +46,8 @@ const MainSection = () => {
   const [passwordData, setPasswordData] = useState([]);
   useEffect(() => {
     setPasswordData(dummyData);
+    const res = getAllPasswords()
+    console.log(res)
   }, []);
   const [openIndex, setOpenIndex] = useState(null);
 
