@@ -17,6 +17,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getAllPasswords } from "../../features/Axios/user/AllPasswords";
 import { deletePassword } from "../../features/Axios/user/deletePassword";
+import { decryptPassword } from "../../features/Axios/user/decryptPassword";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -48,8 +49,15 @@ const MainSection = () => {
     });
   }, [status]);
   const [openIndex, setOpenIndex] = useState(null);
+  const [password,setPassword] = useState('*************')
 
-  const toggleOpen = (index) => {
+  const toggleOpen = (index,password,iv) => {
+    console.log(password)
+    console.log(iv)
+    decryptPassword(password,iv).then((response)=>{
+      console.log(response.password)
+    })
+    // setPassword(password)
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
@@ -155,7 +163,7 @@ const MainSection = () => {
                       {item?.title}
                     </p>
                     <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                      <Button size="sm" onClick={() => toggleOpen(index)}>
+                      <Button size="sm" onClick={() => toggleOpen(index,item?.password,item?.iv)}>
                         view
                       </Button>
                       <Collapse open={openIndex === index}>
@@ -163,7 +171,7 @@ const MainSection = () => {
                           <CardBody>
                             <Typography>
                               Your <span className="text-bold">{item?.title}</span> password <br />
-                              {item?.password} 
+                              <span className="text-m">{password}</span> 
                               <IconButton size="sm" style={{ marginLeft:'10px' }}>
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
