@@ -1,4 +1,4 @@
-import { Input } from "@material-tailwind/react";
+// import { Input } from "@material-tailwind/react";
 import { IconButton } from "@material-tailwind/react";
 import {
   Collapse,
@@ -11,6 +11,13 @@ import React, { useEffect, useState } from "react";
 import Search from "./search";
 import { DefaultPagination } from "./pagination";
 import { AddPassword } from "../../features/Axios/user/addPassword";
+import { Formik, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  password: Yup.string().required("Password is required"),
+});
 
 const dummyData = [
   {
@@ -38,7 +45,6 @@ const MainSection = () => {
   const [passwordData, setPasswordData] = useState([]);
   useEffect(() => {
     setPasswordData(dummyData);
-    // AddPassword()
   }, []);
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -58,25 +64,60 @@ const MainSection = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form className="space-y-6" action="#" method="POST">
-                <div className="w-72">
-                  <Input label="Title" />
-                </div>
+              <Formik
+                initialValues={{ title: "", password: "" }}
+                validationSchema={validationSchema}
+                onSubmit={(values, { resetForm }) => {
+                  // Handle form submission here
+                  console.log("Form values:", values);
+                  AddPassword(values);
+                  resetForm();
+                }}
+              >
+                {({ handleSubmit }) => (
+                  <form className="space-y-6" onSubmit={handleSubmit}>
+                    <div className="w-72">
+                      <label htmlFor="title">Title</label>
+                      <Field
+                        type="text"
+                        id="title"
+                        name="title"
+                        className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      />
+                      <ErrorMessage
+                        name="title"
+                        component="div"
+                        className="text-red-500"
+                      />
+                    </div>
 
-                <div className="w-72">
-                  <Input label="Password" />
-                </div>
+                    <div className="w-72">
+                      <label htmlFor="password">Password</label>
+                      <Field
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      />
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        className="text-red-500"
+                      />
+                    </div>
 
-                <div>
-                  <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Add Password
-                  </button>
-                 
-                </div>
-              </form>
+                    <div>
+                      <button
+                        type="submit"
+                        className="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      >
+                        Add Password
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </Formik>
+             
             </div>
           </div>
         </div>
@@ -130,9 +171,8 @@ const MainSection = () => {
                 </div>
               </li>
             ))}
-
           </ul>
-          <DefaultPagination/>
+          <DefaultPagination />
         </div>
       </div>
     </>
