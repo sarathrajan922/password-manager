@@ -10,9 +10,8 @@ export const AddPassword = async(data)=>{
             method: 'post',
             data : data
         }
-  
        const response = await axios(config)
-       return response.data
+       return response.data.message
     }catch(e){
         if(e.message === 'Request failed with status code 404'){
             throw new Error(e.message)

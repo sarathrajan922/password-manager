@@ -20,35 +20,14 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
 });
 
-const dummyData = [
-  {
-    title: "LeetCode",
-    password: "password1234",
-  },
-  {
-    title: "GitHub",
-    password: "qwerty5678",
-  },
-  {
-    title: "Facebook",
-    password: "securePassword",
-  },
-  {
-    title: "Instagram",
-    password: "myp@ssw0rd",
-  },
-  // {
-  //   title: "email",
-  //   password: "secretpassword123",
-  // },
-];
 const MainSection = () => {
   const [passwordData, setPasswordData] = useState([]);
+  const [status,setStatus] = useState(false)
   useEffect(() => {
-    setPasswordData(dummyData);
-    const res = getAllPasswords()
-    console.log(res)
-  }, []);
+    getAllPasswords().then((response)=>{
+     setPasswordData(response.reverse())
+    })
+  },[status]);
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleOpen = (index) => {
@@ -73,7 +52,11 @@ const MainSection = () => {
                 onSubmit={(values, { resetForm }) => {
                   // Handle form submission here
                   console.log("Form values:", values);
-                  AddPassword(values);
+                  AddPassword(values).then((response)=>{
+                    console.log(response)
+                    setStatus(!status)
+                  });
+
                   resetForm();
                 }}
               >
