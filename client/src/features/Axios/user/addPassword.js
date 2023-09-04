@@ -2,16 +2,13 @@ import axios from "axios";
 import BASE_URL,{urls} from "../../../config";
 
 
-export const AddPassword = async()=>{
-    const obj = {
-        password: 'sarath',
-        title: 'testing'
-    }
+export const AddPassword = async(data)=>{
+   
     try{
         const config= {
             url: BASE_URL+urls.ADD_PASSWORD,
             method: 'post',
-            data : obj
+            data : data
         }
   
        const response = await axios(config)
