@@ -40,6 +40,15 @@ const userController = {
             message:'fetch all password successfull',
             result
         })
+    },
+
+    deletePassword: async(req:Request,res:Response)=>{
+        const {title} = req.body ?? ''
+        const result = await  userHelper.deletePassword(title)
+        res.send({
+            message:'deleted successfully',
+            result
+        })
     }
 }
 

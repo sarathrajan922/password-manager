@@ -23,7 +23,14 @@ const userHelper = {
   getAllPasswords: async ()=>{
     const data = await PasswordModel.find();
     return data
+  },
+
+  deletePassword: async(title: string)=>{
+    const result = await PasswordModel.findOneAndDelete({title: title});
+    return result
   }
+
+
 };
 
 export default userHelper;

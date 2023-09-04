@@ -1,5 +1,7 @@
 // import { Input } from "@material-tailwind/react";
 import { IconButton } from "@material-tailwind/react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Collapse,
   Button,
@@ -21,6 +23,22 @@ const validationSchema = Yup.object().shape({
 });
 
 const MainSection = () => {
+  const notify = (type) =>{
+    if(type==='err'){
+      toast.error('🦄 Already Exist!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
+    }else{
+      toast("Password Saved!");
+    }
+  } 
   const [passwordData, setPasswordData] = useState([]);
   const [status,setStatus] = useState(false)
   useEffect(() => {
@@ -54,6 +72,11 @@ const MainSection = () => {
                   console.log("Form values:", values);
                   AddPassword(values).then((response)=>{
                     console.log(response)
+                    if(response === 'title already exists'){
+                      notify('err')
+                    }else{
+                      notify('success')
+                    }
                     setStatus(!status)
                   });
 
@@ -113,7 +136,7 @@ const MainSection = () => {
             <div className="py-3 my-3">
               <Search />
             </div>
-
+            <ToastContainer />
             {passwordData.map((item, index) => (
               <li className="py-3 sm:pb-4" key={index}>
                 <div className="flex items-center space-x-4">
