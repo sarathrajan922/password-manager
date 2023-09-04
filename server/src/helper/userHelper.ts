@@ -4,33 +4,32 @@ import { PasswordInterface } from "../types/passwordInterface";
 
 const userHelper = {
   addPassword: async (passwordData: PasswordInterface) => {
-
-    const checkTitleExist = await PasswordModel.findOne({title: passwordData.title})
-    if(!checkTitleExist){
-    const { iv, password } = encrypt(passwordData.password);
-    const encryptedObj = {
-      iv,
-      password,
-      title : passwordData.title 
+    const checkTitleExist = await PasswordModel.findOne({
+      title: passwordData.title,
+    });
+    if (!checkTitleExist) {
+      const { iv, password } = encrypt(passwordData.password);
+      const encryptedObj = {
+        iv,
+        password,
+        title: passwordData.title,
+      };
+      await PasswordModel.create(encryptedObj);
+      return "success";
+    } else {
+      return "titleExist";
     }
-    await PasswordModel.create(encryptedObj);
-    return 'success';
-  }else{
-    return 'titleExist'
-  }
   },
 
-  getAllPasswords: async ()=>{
+  getAllPasswords: async () => {
     const data = await PasswordModel.find();
-    return data
+    return data;
   },
 
-  deletePassword: async(title: string)=>{
-    const result = await PasswordModel.findOneAndDelete({title: title});
-    return result
-  }
-
-
+  deletePassword: async (title: string) => {
+    const result = await PasswordModel.findOneAndDelete({ title: title });
+    return result;
+  },
 };
 
 export default userHelper;
