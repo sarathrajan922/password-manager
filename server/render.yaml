@@ -1,0 +1,5 @@
+services:
+  - name: web
+    buildCommand: yarn
+    env:
+      NODE_VERSION: 16.20.1
