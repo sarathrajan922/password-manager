@@ -1,7 +1,7 @@
 // import { Input } from "@material-tailwind/react";
 import { IconButton } from "@material-tailwind/react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Collapse,
   Button,
@@ -16,6 +16,7 @@ import { AddPassword } from "../../features/Axios/user/addPassword";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getAllPasswords } from "../../features/Axios/user/AllPasswords";
+import { deletePassword } from "../../features/Axios/user/deletePassword";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -23,9 +24,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const MainSection = () => {
-  const notify = (type) =>{
-    if(type==='err'){
-      toast.error('🦄 Already Exist!', {
+  const notify = (type, message) => {
+    if (type === "err") {
+      toast.error(`${message}!`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -34,22 +35,33 @@ const MainSection = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        })
-    }else{
-      toast("Password Saved!");
+      });
+    } else {
+      toast(message);
     }
-  } 
+  };
   const [passwordData, setPasswordData] = useState([]);
-  const [status,setStatus] = useState(false)
+  const [status, setStatus] = useState(false);
   useEffect(() => {
-    getAllPasswords().then((response)=>{
-     setPasswordData(response.reverse())
-    })
-  },[status]);
+    getAllPasswords().then((response) => {
+      setPasswordData(response.reverse());
+    });
+  }, [status]);
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleOpen = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  const removePasswords = (title) => {
+    deletePassword(title).then((response) => {
+      if (response) {
+        notify("success", "Password Deleted Successfully");
+        setStatus(!status);
+      } else {
+        notify("err", "something went wrong");
+      }
+    });
   };
 
   return (
@@ -69,15 +81,14 @@ const MainSection = () => {
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm }) => {
                   // Handle form submission here
-                  console.log("Form values:", values);
-                  AddPassword(values).then((response)=>{
-                    console.log(response)
-                    if(response === 'title already exists'){
-                      notify('err')
-                    }else{
-                      notify('success')
+
+                  AddPassword(values).then((response) => {
+                    if (response === "title already exists") {
+                      notify("err", "Title Already Exists!");
+                    } else {
+                      notify("success", "Password Saved Successfully!");
                     }
-                    setStatus(!status)
+                    setStatus(!status);
                   });
 
                   resetForm();
@@ -126,7 +137,6 @@ const MainSection = () => {
                   </form>
                 )}
               </Formik>
-             
             </div>
           </div>
         </div>
@@ -152,7 +162,29 @@ const MainSection = () => {
                         <Card className="my-4 mx-auto w-8/12">
                           <CardBody>
                             <Typography>
-                              Your {item?.title} password is {item?.password}
+                              Your <span className="text-bold">{item?.title}</span> password <br />
+                              {item?.password} 
+                              <IconButton size="sm" style={{ marginLeft:'10px' }}>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="w-6 h-6"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                  />
+                                </svg>
+                              </IconButton>
                             </Typography>
                           </CardBody>
                         </Card>
@@ -168,6 +200,9 @@ const MainSection = () => {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="w-6 h-6"
+                        onClick={() => {
+                          removePasswords(item?.title);
+                        }}
                       >
                         <path
                           strokeLinecap="round"

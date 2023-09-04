@@ -9,7 +9,7 @@ export const getAllPasswords = async ()=>{
         }
 
         const response = await axios(config)
-        console.log(response?.data?.result)
+        
         return response?.data?.result
     }catch(e){
         if(e.message === 'Request failed with status code 404'){

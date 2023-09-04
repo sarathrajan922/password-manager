@@ -7,7 +7,6 @@ const Body = () => {
   return (
     <>
       <Navbar />
-      {/* <Search/> */}
       <MainSection/>
       
     </>
