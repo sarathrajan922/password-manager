@@ -21,8 +21,18 @@ const userController = {
         const result = decrypt(encryptedPassHex,ivHex)
         console.log(result)
         res.send({
-            message: "password decryted succesfuly",
+            message: "password decryted succesfully",
             password: result
+        })
+    },
+
+
+    getAllPasswords: async(req:Request,res:Response)=>{
+        const result = await userHelper.getAllPasswords()
+        console.log(result)
+        res.send({
+            message:'fetch all password successfull',
+            result
         })
     }
 }
