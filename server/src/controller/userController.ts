@@ -8,11 +8,17 @@ const userController = {
         res.send('api reached in controller')
     },
 
-    addPassword:(req:Request,res:Response)=>{
+    addPassword:async (req:Request,res:Response)=>{
         const result = userHelper.addPassword(req.body)
-        res.send({
-            message: 'password added succesfully'
-        })
+        if(await result === 'titleExist'){
+            res.send({
+                message: 'title already exists'
+            })
+        }else{
+            res.send({
+                message: 'password added succesfully'
+            })
+        }
     },
 
     showPassword: (req:Request,res:Response)=>{

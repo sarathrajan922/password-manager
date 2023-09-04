@@ -4,6 +4,9 @@ import { PasswordInterface } from "../types/passwordInterface";
 
 const userHelper = {
   addPassword: async (passwordData: PasswordInterface) => {
+
+    const checkTitleExist = await PasswordModel.findOne({title: passwordData.title})
+    if(!checkTitleExist){
     const { iv, password } = encrypt(passwordData.password);
     const encryptedObj = {
       iv,
@@ -11,7 +14,10 @@ const userHelper = {
       title : passwordData.title 
     }
     await PasswordModel.create(encryptedObj);
-    return true;
+    return 'success';
+  }else{
+    return 'titleExist'
+  }
   },
 
   getAllPasswords: async ()=>{
