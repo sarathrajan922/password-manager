@@ -2,4 +2,4 @@ services:
   - name: web
     buildCommand: yarn
     env:
-      NODE_VERSION: 14.20.1
+      NODE_VERSION: 16.20.1
