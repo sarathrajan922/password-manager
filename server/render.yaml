@@ -1,5 +1,6 @@
 services:
   - name: web
     buildCommand: yarn
+    startCommand: yarn start
     env:
-      NODE_VERSION: 16.20.1
+      NODE_VERSION: 16
