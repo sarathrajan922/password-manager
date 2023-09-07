@@ -36,7 +36,6 @@ const userController = {
         const encryptedPassHex = (_a = req.body.password) !== null && _a !== void 0 ? _a : "";
         const ivHex = (_b = req.body.iv) !== null && _b !== void 0 ? _b : "";
         const result = (0, credential_security_1.decrypt)(encryptedPassHex, ivHex);
-        console.log(result);
         res.send({
             message: "password decryted succesfully",
             password: result,
@@ -44,7 +43,6 @@ const userController = {
     },
     getAllPasswords: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield userHelper_1.default.getAllPasswords();
-        console.log(result);
         res.send({
             message: "fetch all password successfull",
             result,

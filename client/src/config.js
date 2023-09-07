@@ -5,5 +5,6 @@ export const urls = {
   DELETE_PASSWORD: "delete-password",
 };
 
-const BASE_URL = "http://localhost:3001/api/";
+// const BASE_URL = "http://localhost:3001/api/";
+const BASE_URL = "https://app2.voyago.site/api/"
 export default BASE_URL;
