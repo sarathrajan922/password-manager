@@ -8,7 +8,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import configKeys from "./config/configKeys";
 const app = express();
-const port = configKeys.PORT;
+const port = configKeys.PORT || 3001;
 
 import userRouter from "./routes/user";
 

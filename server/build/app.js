@@ -12,7 +12,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const configKeys_1 = __importDefault(require("./config/configKeys"));
 const app = (0, express_1.default)();
-const port = configKeys_1.default.PORT;
+const port = configKeys_1.default.PORT || 3001;
 const user_1 = __importDefault(require("./routes/user"));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
