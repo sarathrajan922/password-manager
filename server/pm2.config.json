@@ -2,7 +2,7 @@
     "apps": [
       {
         "name": "password manager",
-        "script": "nodemon ./src/app.ts",
+        "script": "nodemon ./build/app.js",
         "interpreter": "/usr/local/bin/ts-node",
         "env_file": ".env",
         "instances": 1,
