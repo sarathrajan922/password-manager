@@ -1,8 +1,8 @@
 import crypto, { Cipher } from "crypto";
 import configKeys from "../config/configKeys";
-
+const CRYPTO_SECRET = configKeys.CRYPTO_SECRET || 'pppppppppppppppppppppppppppppppp';
 export const encrypt = (password: string) => {
-  const key = Buffer.from(configKeys.CRYPTO_SECRET, "utf8");
+  const key = Buffer.from(CRYPTO_SECRET, "utf8");
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
 
@@ -17,7 +17,7 @@ export const encrypt = (password: string) => {
 
 export const decrypt = (encryptedPassHex: string, ivHex: string) => {
   try {
-    const key = Buffer.from(configKeys.CRYPTO_SECRET, "utf8");
+    const key = Buffer.from(CRYPTO_SECRET, "utf8");
     const iv = Buffer.from(ivHex, "hex");
     const encryptedData = Buffer.from(encryptedPassHex, "hex");
     const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);

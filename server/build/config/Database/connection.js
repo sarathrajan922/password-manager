@@ -14,12 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const configKeys_1 = __importDefault(require("../configKeys"));
+const DB_NAME = configKeys_1.default.DB_NAME || "passwordManager";
+const MONGO_DB_URL = configKeys_1.default.MONGO_DB_URL || "mongodb+srv://sarathrajan:cnbvRjsjfyQA90Se@timeshub.l0vdmu5.mongodb.net/test?authSource=timesHub&authMechanism=SCRAM-SHA-1";
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const dbObject = {
-        dbName: configKeys_1.default.DB_NAME,
+        dbName: DB_NAME,
     };
     try {
-        yield mongoose_1.default.connect(configKeys_1.default.MONGO_DB_URL, dbObject);
+        yield mongoose_1.default.connect(MONGO_DB_URL, dbObject);
         console.log(`Database connected successfully`);
     }
     catch (error) {
