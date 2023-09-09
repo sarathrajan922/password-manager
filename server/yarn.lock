@@ -83,6 +83,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/events@*":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
+  integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
+
 "@types/express-serve-static-core@^4.17.33":
   version "4.17.36"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.17.36.tgz#baa9022119bdc05a4adfe740ffc97b5f9360e545"
@@ -126,6 +131,15 @@
     "@types/bson" "*"
     "@types/node" "*"
 
+"@types/mongodb@~3.0.18":
+  version "3.0.23"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.0.23.tgz#22885a5b6693d4957767d9124dd18bf9c269bce8"
+  integrity sha512-ZEXxdtqb5gY24XugzHwWjTVIqeSiN4WfrNma7qAGkpUOq4475a1hSHvoywpow3Pe47G+u2DyseNfB+yKLDgAQQ==
+  dependencies:
+    "@types/bson" "*"
+    "@types/events" "*"
+    "@types/node" "*"
+
 "@types/morgan@^1.9.5":
   version "1.9.5"
   resolved "https://registry.yarnpkg.com/@types/morgan/-/morgan-1.9.5.tgz#dda7388af1e67863f9fa4496d6d63f6f53334306"
@@ -133,7 +147,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^20.5.7":
+"@types/node@*":
+  version "20.6.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.0.tgz#9d7daa855d33d4efec8aea88cd66db1c2f0ebe16"
+  integrity sha512-najjVq5KN2vsH2U/xyh2opaSEz6cZMR2SetLIlxlj08nOcmPOemJmUK2o4kUzfLqfrWE0PIrNeE16XhYDd3nqg==
+
+"@types/node@^20.5.7":
   version "20.5.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.9.tgz#a70ec9d8fa0180a314c3ede0e20ea56ff71aed9a"
   integrity sha512-PcGNd//40kHAS3sTlzKB9C9XL4K0sTup8nbG5lC14kzEteTNuAFh9u5nA0o5TWnSG2r/JNPRXFVcHJIIeRlmqQ==

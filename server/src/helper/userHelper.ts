@@ -30,6 +30,11 @@ const userHelper = {
     const result = await PasswordModel.findOneAndDelete({ title: title });
     return result;
   },
+
+  getAllPassword : async(limit:Number,offSet:Number)=>{
+    const result = await PasswordModel.find().skip(offSet).limit(limit).sort({ createdAt: -1 })
+    return result;
+  }
 };
 
 export default userHelper;

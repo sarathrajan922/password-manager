@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import userHelper from "../helper/userHelper";
 import { decrypt } from "../Services/credential_security";
+import { rmSync } from "fs";
 const userController = {
   demo: (req: Request, res: Response) => {
     res.send("api reached in controller");
@@ -45,6 +46,28 @@ const userController = {
       result,
     });
   },
+
+  getPasswords: async (req:Request,res:Response)=>{
+   console.log(req.query)
+    let { limit ,offSet} = req.query as {limit:string,offSet:string}
+
+    if(parseInt(limit) > 100 ){
+      res.send({
+        message: "limit is higher than 100, please try again",
+        status : false
+      })
+    }else{
+      if(!offSet){
+        offSet = '0'
+      }
+      const result = await userHelper.getAllPassword(parseInt(limit),parseInt(offSet))
+      res.send({
+        message: "fetch paginated data successfully",
+        result
+      })
+    }
+    
+  }
 };
 
 export default userController;
