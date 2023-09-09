@@ -18,6 +18,7 @@ import { getAllPasswords } from "../../features/Axios/user/AllPasswords";
 import { deletePassword } from "../../features/Axios/user/deletePassword";
 import { decryptPassword } from "../../features/Axios/user/decryptPassword";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { DefaultPagination } from "./pagination";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -48,24 +49,18 @@ const MainSection = () => {
   const [password] = useState("*************");
   const [originalPass, setOriginalPass] = useState("");
   const [show, setShow] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(4);
+  const [added,setAdded] = useState(false);
   const [displayData, SetDisplayData] = useState([]);
 
   useEffect(() => {
     getAllPasswords().then((response) => {
       setPasswordData(response.reverse());
-      SetDisplayData(response);
+      // SetDisplayData(response);
     });
   }, [status]);
 
-  const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const goToNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
+ 
+  
 
   const toggleOpen = (index, password, iv) => {
     decryptPassword(password, iv).then((response) => {
@@ -135,6 +130,7 @@ const MainSection = () => {
                       notify("err", "Title Already Exists!");
                     } else {
                       notify("success", "Password Saved Successfully!");
+                      setAdded(!added)
                     }
                     setStatus(!status);
                   });
@@ -206,12 +202,7 @@ const MainSection = () => {
             </div>
             <ToastContainer />
             {displayData ? (
-              displayData
-                ?.slice(
-                  (currentPage - 1) * itemsPerPage,
-                  currentPage * itemsPerPage
-                )
-                .map((item, index) => (
+              displayData.map((item, index) => (
                   <li className="py-3 sm:pb-4" key={index}>
                     <div className="flex items-center space-x-4">
                       <div className="flex-1 min-w-0">
@@ -325,28 +316,7 @@ const MainSection = () => {
               <div>No Data Available</div>
             )}
           </ul>
-
-          <div className="flex max-w-md  pt-16  items-center gap-4">
-            <Button
-              variant="text"
-              className="flex  items-center gap-2"
-              onClick={goToPreviousPage}
-              disabled={currentPage === 1}
-            >
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-            </Button>
-            <Button
-              variant="text"
-              className="flex items-center gap-2"
-              onClick={goToNextPage}
-              disabled={
-                currentPage ===
-                Math.ceil(displayData?.length ?? 0 / itemsPerPage)
-              }
-            >
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" /> Next
-            </Button>
-          </div>
+          <DefaultPagination setDisplayData={SetDisplayData} added={added}/>
         </div>
       </div>
     </>

@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { getPasswords } from "../../features/Axios/user/getPassword";
 
-export function DefaultPagination() {
+export function DefaultPagination({setDisplayData,added}) {
   const [active, setActive] = React.useState(1);
+  const [pageNO,setPageNO] = React.useState(1);
+
+ 
+
+  useEffect(()=>{
+    const limit = 4
+    const offset = (pageNO-1)*limit
+    getPasswords(limit,offset).then((response)=>{
+      setDisplayData(response?.result)
+    })
+  },[pageNO, setDisplayData,added])
 
   const getItemProps = (index) => ({
+    
     variant: active === index ? "filled" : "text",
     color: "gray",
-    onClick: () => setActive(index),
+    onClick: () =>{
+      setActive(index)
+      setPageNO(index)
+    } 
+    
   });
 
   const next = () => {
